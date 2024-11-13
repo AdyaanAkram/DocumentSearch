@@ -39,7 +39,7 @@ def generate_boolean_query(input_text):
     ]
 
     # Send the messages to OpenAI and retrieve the response
-    chat_completion = client.chat.completions.create(
+    chat_completion = openai.ChatCompletion.create(
         messages=messages,
         model="gpt-4",
     )
