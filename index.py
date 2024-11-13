@@ -1,11 +1,9 @@
 import streamlit as st
-import os
 import openai
 
-# Set up your API key
-client = openai(api_key=st.secrets["OPENAI_API_KEY"])
+# Set up your API key using Streamlit secrets
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-# Initialize OpenAI client
 st.title("Worldox Boolean Search Generator")
 st.write("Enter your search criteria in natural language, and this tool will convert it to Worldox-compatible Boolean logic.")
 
@@ -39,9 +37,9 @@ def generate_boolean_query(input_text):
     ]
 
     # Send the messages to OpenAI and retrieve the response
-    chat_completion = client.ChatCompletion.create(
-        messages=messages,
+    chat_completion = openai.ChatCompletion.create(
         model="gpt-4",
+        messages=messages,
     )
 
     # Correctly access the content of the first choice message
