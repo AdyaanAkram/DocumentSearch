@@ -39,13 +39,13 @@ def generate_boolean_query(input_text):
     ]
 
     # Send the messages to OpenAI and retrieve the response
-    chat_completion = openai.ChatCompletion.create(
+    response = openai.Completion.create(
         messages=messages,
         model="gpt-4",
     )
 
     # Correctly access the content of the first choice message
-    return chat_completion.choices[0].message.content.strip()
+    return response.choices[0].text.strip()
 
 # Display the output when the user clicks the button
 if st.button("Generate Boolean Query"):
