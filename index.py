@@ -3,7 +3,7 @@ import os
 import openai
 
 # Set up your API key
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # Initialize OpenAI client
 st.title("Worldox Boolean Search Generator")
@@ -39,13 +39,13 @@ def generate_boolean_query(input_text):
     ]
 
     # Send the messages to OpenAI and retrieve the response
-    response = openai.Completion.create(
+    chat_completion = client.ChatCompletion.create(
         messages=messages,
         model="gpt-4",
     )
 
     # Correctly access the content of the first choice message
-    return response.choices[0].text.strip()
+    return chat_completion.choices[0].message["content"].strip()
 
 # Display the output when the user clicks the button
 if st.button("Generate Boolean Query"):
