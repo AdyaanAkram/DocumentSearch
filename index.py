@@ -12,32 +12,38 @@ user_input = st.text_area("Enter your search criteria:")
 
 # Function to generate Boolean query
 def generate_boolean_query(input_text):
-    # Prepare the prompt for OpenAI
-    prompt = f"""
-    Convert the following search criteria into a Boolean query for a document search. Use AND, OR, NOT, and quotation marks for phrases. Ensure it follows this pattern:
+    # Define the messages format for chat completion with gpt-3.5-turbo
+    messages = [
+        {
+            "role": "system",
+            "content": """
+            Convert the following search criteria into a Boolean query for a document search. Use AND, OR, NOT, and quotation marks for phrases. Ensure it follows this pattern:
 
-    Example 1:
-    Input: "Find documents with contract information from 2023 or 2024, but exclude drafts."
-    Output: "(contract AND (2023 OR 2024)) AND NOT draft"
+            Example 1:
+            Input: "Find documents with contract information from 2023 or 2024, but exclude drafts."
+            Output: "(contract AND (2023 OR 2024)) AND NOT draft"
 
-    Example 2:
-    Input: "Show reports that mention 'financial projections' and 'market analysis'."
-    Output: "(\"financial projections\" AND \"market analysis\")"
+            Example 2:
+            Input: "Show reports that mention 'financial projections' and 'market analysis'."
+            Output: "(\"financial projections\" AND \"market analysis\")"
 
-    Now, convert this:
-    {input_text}
-    """
+            Now, convert this:
+            """
+        },
+        {
+            "role": "user",
+            "content": input_text,
+        },
+    ]
 
-    # Use the client to generate the completion
-    response = client.completions.create(
-        model="text-davinci-003",
-        prompt=prompt,
-        max_tokens=100,
-        temperature=0.5
+    # Use the client to generate the chat completion
+    response = client.chat_completions.create(
+        model="gpt-3.5-turbo",
+        messages=messages,
     )
 
-    # Extract and return the text from the response
-    return response.choices[0].text.strip()
+    # Extract and return the content from the first message
+    return response.choices[0].message.content.strip()
 
 # Display the output when the user clicks the button
 if st.button("Generate Boolean Query"):
