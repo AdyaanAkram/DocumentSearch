@@ -3,7 +3,7 @@ import os
 import openai
 
 # Set up your API key
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+client = openai(api_key=st.secrets["OPENAI_API_KEY"])
 
 # Initialize OpenAI client
 st.title("Worldox Boolean Search Generator")
