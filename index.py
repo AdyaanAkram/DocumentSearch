@@ -1,12 +1,12 @@
 import streamlit as st
 import os
-import OpenAI
+import openAI
 
 # Set up your API key
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Initialize OpenAI client
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = openAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 st.title("Worldox Boolean Search Generator")
 st.write("Enter your search criteria in natural language, and this tool will convert it to Worldox-compatible Boolean logic.")
