@@ -1,8 +1,8 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 
-# Set up your API key using Streamlit secrets
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+# Initialize the OpenAI client
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 st.title("Worldox Boolean Search Generator")
 st.write("Enter your search criteria in natural language, and this tool will convert it to Worldox-compatible Boolean logic.")
@@ -10,40 +10,34 @@ st.write("Enter your search criteria in natural language, and this tool will con
 # Input field
 user_input = st.text_area("Enter your search criteria:")
 
-# Function to process the input using OpenAI
+# Function to generate Boolean query
 def generate_boolean_query(input_text):
-    # Define the messages for OpenAI chat completion
-    messages = [
-        {
-            "role": "system",
-            "content": """
-            Convert the following search criteria into a Boolean query for a document search. Use AND, OR, NOT, and quotation marks for phrases. Ensure it follows this pattern:
+    # Prepare the prompt for OpenAI
+    prompt = f"""
+    Convert the following search criteria into a Boolean query for a document search. Use AND, OR, NOT, and quotation marks for phrases. Ensure it follows this pattern:
 
-            Example 1:
-            Input: "Find documents with contract information from 2023 or 2024, but exclude drafts."
-            Output: "(contract AND (2023 OR 2024)) AND NOT draft"
+    Example 1:
+    Input: "Find documents with contract information from 2023 or 2024, but exclude drafts."
+    Output: "(contract AND (2023 OR 2024)) AND NOT draft"
 
-            Example 2:
-            Input: "Show reports that mention 'financial projections' and 'market analysis'."
-            Output: "(\"financial projections\" AND \"market analysis\")"
+    Example 2:
+    Input: "Show reports that mention 'financial projections' and 'market analysis'."
+    Output: "(\"financial projections\" AND \"market analysis\")"
 
-            Now, convert this:
-            """
-        },
-        {
-            "role": "user",
-            "content": input_text,
-        },
-    ]
+    Now, convert this:
+    {input_text}
+    """
 
-    # Send the messages to OpenAI and retrieve the response
-    chat_completion = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=messages,
+    # Use the client to generate the completion
+    response = client.completions.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        max_tokens=100,
+        temperature=0.5
     )
 
-    # Correctly access the content of the first choice message
-    return chat_completion.choices[0].message["content"].strip()
+    # Extract and return the text from the response
+    return response.choices[0].text.strip()
 
 # Display the output when the user clicks the button
 if st.button("Generate Boolean Query"):
