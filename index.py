@@ -1,8 +1,12 @@
 import streamlit as st
+import os
 from openai import OpenAI
 
-# Initialize the OpenAI client
+# Set up your API key
+# Set up your API key
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+# Initialize OpenAI client
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 st.title("Worldox Boolean Search Generator")
 st.write("Enter your search criteria in natural language, and this tool will convert it to Worldox-compatible Boolean logic.")
@@ -10,9 +14,9 @@ st.write("Enter your search criteria in natural language, and this tool will con
 # Input field
 user_input = st.text_area("Enter your search criteria:")
 
-# Function to generate Boolean query
+# Function to process the input using OpenAI
 def generate_boolean_query(input_text):
-    # Define the messages format for chat completion with gpt-3.5-turbo
+    # Define the messages for OpenAI chat completion
     messages = [
         {
             "role": "system",
@@ -36,14 +40,14 @@ def generate_boolean_query(input_text):
         },
     ]
 
-    # Use the client to generate the chat completion
-    response = client.chat_completions.create(
-        model="gpt-3.5-turbo",
+    # Send the messages to OpenAI and retrieve the response
+    chat_completion = client.chat.completions.create(
         messages=messages,
+        model="gpt-4",
     )
 
-    # Extract and return the content from the first message
-    return response.choices[0].message.content.strip()
+    # Correctly access the content of the first choice message
+    return chat_completion.choices[0].message.content.strip()
 
 # Display the output when the user clicks the button
 if st.button("Generate Boolean Query"):
