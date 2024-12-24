@@ -1,37 +1,40 @@
-Document Searcher
+# Document Searcher
 
-Overview
+## 📖 Overview
 
-The Document Searcher is an advanced desktop application designed to streamline the process of finding content across a variety of file types with precision and speed. Built with an intuitive interface and real-time functionality, it enables users to locate specific information within files stored on their systems. By integrating PyQt5 for a modern GUI and leveraging libraries for file parsing, the tool offers a seamless experience for professionals managing large document repositories.
+The **Document Searcher** is an advanced desktop application designed to make locating files and content across your computer effortless. With its sleek interface and robust functionality, this tool is perfect for managing and retrieving files quickly from large repositories. Whether you need a keyword from a document or the name of a specific file, Document Searcher has you covered.
 
-Features
+---
 
-Core Functionality
-Multi-format Search: Supports PDF, Word (.docx), and plain text files, ensuring compatibility with common file types.
-Real-time Results: Displays search results dynamically as the search progresses.
-Content Search Toggle: Option to search file names only or delve into file contents for deeper analysis.
-Progress Indicator: Tracks the search progress visually for user convenience.
-Stop/Start Capability: Offers control to pause or restart the search as needed.
-Search Locations
-Desktop
-Documents
-Downloads
-Detailed File Information
-File Name
-Type
-Location
-Last Modified Date
-Size
-Match Location: Specifies if the match was found in the file name or content.
-User Experience Enhancements
-Modern UI design with dynamic styles for better accessibility.
-Error handling for unsupported file types and missing dependencies.
-Lightweight application optimized for performance.
-Technology Stack
+## ✨ Features
 
-Programming Language: Python
-Framework: PyQt5 for GUI
-Libraries:
-PyPDF2 for PDF parsing
-docx for Word document parsing
-os and datetime for file management and metadata extraction
+### Core Functionalities
+- **🔍 Multi-format Search**: Supports PDF, Word (.docx), and plain text files, ensuring seamless compatibility with popular file formats.
+- **⚡ Real-time Results**: See results dynamically as the application processes your files.
+- **🔗 Content Search Toggle**: Easily switch between searching file names and content.
+- **📊 Progress Indicator**: Visualize the search progress for a smooth user experience.
+- **⏯️ Stop/Start Capability**: Gain full control to pause or resume searches at your convenience.
+
+### Supported Search Locations
+- Desktop
+- Documents
+- Downloads
+
+### Detailed File Insights
+- File Name
+- File Type
+- File Location
+- Last Modified Date
+- File Size
+- Match Location (file name or content)
+
+---
+
+## 🛠️ Technology Stack
+
+- **Programming Language**: Python
+- **Framework**: PyQt5 for GUI
+- **Libraries**:
+  - `PyPDF2` for PDF parsing
+  - `docx` for Word document handling
+  - `os` and `datetime` for file metadata extraction
